@@ -1,0 +1,14 @@
+momentum: 0.9
+gamma: 0.1
+
+lr_policy: "fixed"
+
+net: "gpu1_test.prototxt"
+test_initialization: false
+base_lr: 0.00099
+display: 1000
+max_iter: 60000
+weight_decay: 0.00005
+snapshot: 10000
+snapshot_prefix: "model/m_1"
+solver_mode: GPU

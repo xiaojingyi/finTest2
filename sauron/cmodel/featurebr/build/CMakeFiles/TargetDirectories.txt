@@ -1,0 +1,2 @@
+/datas/codes/sauron/cmodel/featurebr/build/CMakeFiles/test.dir
+/datas/codes/sauron/cmodel/featurebr/build/CMakeFiles/test_automoc.dir

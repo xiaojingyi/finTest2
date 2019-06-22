@@ -1,0 +1,19 @@
+solver_type: ADAGRAD
+net: "run/sauron_tree.prototxt"
+test_iter: 100
+#test_interval: 1000
+test_interval: {max_iter}0
+test_initialization: false
+
+base_lr: 0.01
+weight_decay: 0.0005
+lr_policy: "step"
+stepsize: {max_iter}0
+
+gamma: 0.9
+
+display: 40
+max_iter: {max_iter}
+snapshot: {max_iter}0
+snapshot_prefix: "cache/sauron"
+solver_mode: GPU

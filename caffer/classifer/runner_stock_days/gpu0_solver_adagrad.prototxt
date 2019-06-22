@@ -1,0 +1,13 @@
+type: "Adagrad"
+
+lr_policy: "fixed"
+
+net: "gpu0_alex.prototxt"
+test_initialization: false
+base_lr: 0.001
+display: 1000
+max_iter: 250000
+weight_decay: 0.0005
+snapshot: 10000
+snapshot_prefix: "model/m_0"
+solver_mode: GPU

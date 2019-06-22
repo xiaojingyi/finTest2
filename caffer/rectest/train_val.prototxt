@@ -1,0 +1,3198 @@
+name: "RecNet"
+layer {
+  name: "data"
+  type: "HDF5Data"
+  top: "data"
+  top: "label"
+  include {
+    phase: TRAIN
+  }
+  hdf5_data_param {
+    source: "train.txt"
+    batch_size: 50
+  }
+}
+layer {
+  name: "data"
+  type: "HDF5Data"
+  top: "data"
+  top: "label"
+  include {
+    phase: TEST
+  }
+  hdf5_data_param {
+    source: "test.txt"
+    batch_size: 1
+  }
+}
+
+layer {
+  name: "conv1"
+  type: "Convolution"
+  bottom: "data"
+  top: "conv1"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  convolution_param {
+    num_output: 30
+    pad: 0
+    kernel_h: 1
+    kernel_w: 1000
+    stride_h: 1
+    stride_w: 1000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001
+    }   
+    bias_filler {
+      type: "constant"
+    }   
+  }
+}
+layer {
+  name: "relu1"
+  type: "ReLU"
+  bottom: "conv1"
+  top: "conv1"
+}
+layer {
+  name: "conv2"
+  type: "Convolution"
+  bottom: "conv1"
+  top: "conv2"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  convolution_param {
+    num_output: 30
+    kernel_h: 1
+    kernel_w: 100
+    stride_h: 1
+    stride_w: 10
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001
+    }   
+    bias_filler {
+      type: "constant"
+    }   
+  }
+}
+layer {
+  name: "relu2"
+  type: "ReLU"
+  bottom: "conv2"
+  top: "conv2"
+}
+layer {
+  name: "InnerProduct1013"
+  type: "InnerProduct"
+  bottom: "conv2"
+  top: "InnerProduct1013"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 4096
+    weight_filler {
+      type: "gaussian"
+      std: 0.0098765
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "ReLU1013"
+  type: "ReLU"
+  bottom: "InnerProduct1013"
+  top: "InnerProduct1013"
+}
+layer {
+  name: "Dropout1"
+  type: "Dropout"
+  bottom: "InnerProduct1013"
+  top: "InnerProduct1013"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "InnerProduct1014"
+  type: "InnerProduct"
+  bottom: "InnerProduct1013"
+  top: "InnerProduct1014"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 4096
+    weight_filler {
+      type: "gaussian"
+      std: 0.0098765
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "ReLU1014"
+  type: "ReLU"
+  bottom: "InnerProduct1014"
+  top: "InnerProduct1014"
+}
+layer {
+  name: "Dropout2"
+  type: "Dropout"
+  bottom: "InnerProduct1014"
+  top: "InnerProduct1014"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "InnerProduct1015"
+  type: "InnerProduct"
+  bottom: "InnerProduct1014"
+  top: "InnerProduct1015"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 4096
+    weight_filler {
+      type: "gaussian"
+      std: 0.0098765
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "ReLU1015"
+  type: "ReLU"
+  bottom: "InnerProduct1015"
+  top: "InnerProduct1015"
+}
+layer {
+  name: "Dropout3"
+  type: "Dropout"
+  bottom: "InnerProduct1015"
+  top: "InnerProduct1015"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "InnerProduct1016"
+  type: "InnerProduct"
+  bottom: "InnerProduct1015"
+  top: "InnerProduct1016"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 4096
+    weight_filler {
+      type: "gaussian"
+      std: 0.0098765
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "ReLU1016"
+  type: "ReLU"
+  bottom: "InnerProduct1016"
+  top: "InnerProduct1016"
+}
+layer {
+  name: "Dropout4"
+  type: "Dropout"
+  bottom: "InnerProduct1016"
+  top: "InnerProduct1016"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "InnerProduct1017"
+  type: "InnerProduct"
+  bottom: "InnerProduct1016"
+  top: "InnerProduct1017"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 4096
+    weight_filler {
+      type: "gaussian"
+      std: 0.0098765
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "ReLU1017"
+  type: "ReLU"
+  bottom: "InnerProduct1017"
+  top: "InnerProduct1017"
+}
+layer {
+  name: "Dropout5"
+  type: "Dropout"
+  bottom: "InnerProduct1017"
+  top: "InnerProduct1017"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "InnerProduct1018"
+  type: "InnerProduct"
+  bottom: "InnerProduct1017"
+  top: "InnerProduct1018"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 4096
+    weight_filler {
+      type: "gaussian"
+      std: 0.0098765
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "ReLU1018"
+  type: "ReLU"
+  bottom: "InnerProduct1018"
+  top: "InnerProduct1018"
+}
+layer {
+  name: "Dropout6"
+  type: "Dropout"
+  bottom: "InnerProduct1018"
+  top: "InnerProduct1018"
+  dropout_param {
+    dropout_ratio: 0.2
+  }
+}
+layer {
+  name: "InnerProduct1019"
+  type: "InnerProduct"
+  bottom: "InnerProduct1018"
+  top: "InnerProduct1019"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 1000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0098765
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "ReLU1019"
+  type: "ReLU"
+  bottom: "InnerProduct1019"
+  top: "InnerProduct1019"
+}
+layer {
+  name: "Slice1013"
+  type: "Slice"
+  bottom: "InnerProduct1019"
+  top: "Slice1013"
+  top: "Slice1014"
+  top: "Slice1015"
+  top: "Slice1016"
+  top: "Slice1017"
+  top: "Slice1018"
+  top: "Slice1019"
+  top: "Slice1020"
+  top: "Slice1021"
+  top: "Slice1022"
+  top: "Slice1023"
+  top: "Slice1024"
+  top: "Slice1025"
+  top: "Slice1026"
+  top: "Slice1027"
+  top: "Slice1028"
+  top: "Slice1029"
+  top: "Slice1030"
+  top: "Slice1031"
+  top: "Slice1032"
+  top: "Slice1033"
+  top: "Slice1034"
+  top: "Slice1035"
+  top: "Slice1036"
+  top: "Slice1037"
+  top: "Slice1038"
+  top: "Slice1039"
+  top: "Slice1040"
+  top: "Slice1041"
+  top: "Slice1042"
+  top: "Slice1043"
+  top: "Slice1044"
+  top: "Slice1045"
+  top: "Slice1046"
+  top: "Slice1047"
+  top: "Slice1048"
+  top: "Slice1049"
+  top: "Slice1050"
+  top: "Slice1051"
+  top: "Slice1052"
+  top: "Slice1053"
+  top: "Slice1054"
+  top: "Slice1055"
+  top: "Slice1056"
+  top: "Slice1057"
+  top: "Slice1058"
+  top: "Slice1059"
+  top: "Slice1060"
+  top: "Slice1061"
+  top: "Slice1062"
+  top: "Slice1063"
+  top: "Slice1064"
+  top: "Slice1065"
+  top: "Slice1066"
+  top: "Slice1067"
+  top: "Slice1068"
+  top: "Slice1069"
+  top: "Slice1070"
+  top: "Slice1071"
+  top: "Slice1072"
+  top: "Slice1073"
+  top: "Slice1074"
+  top: "Slice1075"
+  top: "Slice1076"
+  top: "Slice1077"
+  top: "Slice1078"
+  top: "Slice1079"
+  top: "Slice1080"
+  top: "Slice1081"
+  top: "Slice1082"
+  top: "Slice1083"
+  top: "Slice1084"
+  top: "Slice1085"
+  top: "Slice1086"
+  top: "Slice1087"
+  top: "Slice1088"
+  top: "Slice1089"
+  top: "Slice1090"
+  top: "Slice1091"
+  top: "Slice1092"
+  top: "Slice1093"
+  top: "Slice1094"
+  top: "Slice1095"
+  top: "Slice1096"
+  top: "Slice1097"
+  top: "Slice1098"
+  top: "Slice1099"
+  top: "Slice1100"
+  top: "Slice1101"
+  top: "Slice1102"
+  top: "Slice1103"
+  top: "Slice1104"
+  top: "Slice1105"
+  top: "Slice1106"
+  top: "Slice1107"
+  top: "Slice1108"
+  top: "Slice1109"
+  top: "Slice1110"
+  top: "Slice1111"
+  top: "Slice1112"
+  slice_param {
+    slice_point: 10
+    slice_point: 20
+    slice_point: 30
+    slice_point: 40
+    slice_point: 50
+    slice_point: 60
+    slice_point: 70
+    slice_point: 80
+    slice_point: 90
+    slice_point: 100
+    slice_point: 110
+    slice_point: 120
+    slice_point: 130
+    slice_point: 140
+    slice_point: 150
+    slice_point: 160
+    slice_point: 170
+    slice_point: 180
+    slice_point: 190
+    slice_point: 200
+    slice_point: 210
+    slice_point: 220
+    slice_point: 230
+    slice_point: 240
+    slice_point: 250
+    slice_point: 260
+    slice_point: 270
+    slice_point: 280
+    slice_point: 290
+    slice_point: 300
+    slice_point: 310
+    slice_point: 320
+    slice_point: 330
+    slice_point: 340
+    slice_point: 350
+    slice_point: 360
+    slice_point: 370
+    slice_point: 380
+    slice_point: 390
+    slice_point: 400
+    slice_point: 410
+    slice_point: 420
+    slice_point: 430
+    slice_point: 440
+    slice_point: 450
+    slice_point: 460
+    slice_point: 470
+    slice_point: 480
+    slice_point: 490
+    slice_point: 500
+    slice_point: 510
+    slice_point: 520
+    slice_point: 530
+    slice_point: 540
+    slice_point: 550
+    slice_point: 560
+    slice_point: 570
+    slice_point: 580
+    slice_point: 590
+    slice_point: 600
+    slice_point: 610
+    slice_point: 620
+    slice_point: 630
+    slice_point: 640
+    slice_point: 650
+    slice_point: 660
+    slice_point: 670
+    slice_point: 680
+    slice_point: 690
+    slice_point: 700
+    slice_point: 710
+    slice_point: 720
+    slice_point: 730
+    slice_point: 740
+    slice_point: 750
+    slice_point: 760
+    slice_point: 770
+    slice_point: 780
+    slice_point: 790
+    slice_point: 800
+    slice_point: 810
+    slice_point: 820
+    slice_point: 830
+    slice_point: 840
+    slice_point: 850
+    slice_point: 860
+    slice_point: 870
+    slice_point: 880
+    slice_point: 890
+    slice_point: 900
+    slice_point: 910
+    slice_point: 920
+    slice_point: 930
+    slice_point: 940
+    slice_point: 950
+    slice_point: 960
+    slice_point: 970
+    slice_point: 980
+    slice_point: 990
+  }
+}
+layer {
+  name: "InnerProduct1020"
+  type: "InnerProduct"
+  bottom: "Slice1013"
+  top: "InnerProduct1020"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1021"
+  type: "InnerProduct"
+  bottom: "Slice1014"
+  top: "InnerProduct1021"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1022"
+  type: "InnerProduct"
+  bottom: "Slice1015"
+  top: "InnerProduct1022"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1023"
+  type: "InnerProduct"
+  bottom: "Slice1016"
+  top: "InnerProduct1023"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1024"
+  type: "InnerProduct"
+  bottom: "Slice1017"
+  top: "InnerProduct1024"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1025"
+  type: "InnerProduct"
+  bottom: "Slice1018"
+  top: "InnerProduct1025"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1026"
+  type: "InnerProduct"
+  bottom: "Slice1019"
+  top: "InnerProduct1026"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1027"
+  type: "InnerProduct"
+  bottom: "Slice1020"
+  top: "InnerProduct1027"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1028"
+  type: "InnerProduct"
+  bottom: "Slice1021"
+  top: "InnerProduct1028"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1029"
+  type: "InnerProduct"
+  bottom: "Slice1022"
+  top: "InnerProduct1029"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1030"
+  type: "InnerProduct"
+  bottom: "Slice1023"
+  top: "InnerProduct1030"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1031"
+  type: "InnerProduct"
+  bottom: "Slice1024"
+  top: "InnerProduct1031"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1032"
+  type: "InnerProduct"
+  bottom: "Slice1025"
+  top: "InnerProduct1032"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1033"
+  type: "InnerProduct"
+  bottom: "Slice1026"
+  top: "InnerProduct1033"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1034"
+  type: "InnerProduct"
+  bottom: "Slice1027"
+  top: "InnerProduct1034"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1035"
+  type: "InnerProduct"
+  bottom: "Slice1028"
+  top: "InnerProduct1035"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1036"
+  type: "InnerProduct"
+  bottom: "Slice1029"
+  top: "InnerProduct1036"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1037"
+  type: "InnerProduct"
+  bottom: "Slice1030"
+  top: "InnerProduct1037"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1038"
+  type: "InnerProduct"
+  bottom: "Slice1031"
+  top: "InnerProduct1038"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1039"
+  type: "InnerProduct"
+  bottom: "Slice1032"
+  top: "InnerProduct1039"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1040"
+  type: "InnerProduct"
+  bottom: "Slice1033"
+  top: "InnerProduct1040"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1041"
+  type: "InnerProduct"
+  bottom: "Slice1034"
+  top: "InnerProduct1041"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1042"
+  type: "InnerProduct"
+  bottom: "Slice1035"
+  top: "InnerProduct1042"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1043"
+  type: "InnerProduct"
+  bottom: "Slice1036"
+  top: "InnerProduct1043"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1044"
+  type: "InnerProduct"
+  bottom: "Slice1037"
+  top: "InnerProduct1044"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1045"
+  type: "InnerProduct"
+  bottom: "Slice1038"
+  top: "InnerProduct1045"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1046"
+  type: "InnerProduct"
+  bottom: "Slice1039"
+  top: "InnerProduct1046"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1047"
+  type: "InnerProduct"
+  bottom: "Slice1040"
+  top: "InnerProduct1047"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1048"
+  type: "InnerProduct"
+  bottom: "Slice1041"
+  top: "InnerProduct1048"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1049"
+  type: "InnerProduct"
+  bottom: "Slice1042"
+  top: "InnerProduct1049"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1050"
+  type: "InnerProduct"
+  bottom: "Slice1043"
+  top: "InnerProduct1050"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1051"
+  type: "InnerProduct"
+  bottom: "Slice1044"
+  top: "InnerProduct1051"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1052"
+  type: "InnerProduct"
+  bottom: "Slice1045"
+  top: "InnerProduct1052"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1053"
+  type: "InnerProduct"
+  bottom: "Slice1046"
+  top: "InnerProduct1053"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1054"
+  type: "InnerProduct"
+  bottom: "Slice1047"
+  top: "InnerProduct1054"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1055"
+  type: "InnerProduct"
+  bottom: "Slice1048"
+  top: "InnerProduct1055"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1056"
+  type: "InnerProduct"
+  bottom: "Slice1049"
+  top: "InnerProduct1056"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1057"
+  type: "InnerProduct"
+  bottom: "Slice1050"
+  top: "InnerProduct1057"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1058"
+  type: "InnerProduct"
+  bottom: "Slice1051"
+  top: "InnerProduct1058"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1059"
+  type: "InnerProduct"
+  bottom: "Slice1052"
+  top: "InnerProduct1059"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1060"
+  type: "InnerProduct"
+  bottom: "Slice1053"
+  top: "InnerProduct1060"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1061"
+  type: "InnerProduct"
+  bottom: "Slice1054"
+  top: "InnerProduct1061"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1062"
+  type: "InnerProduct"
+  bottom: "Slice1055"
+  top: "InnerProduct1062"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1063"
+  type: "InnerProduct"
+  bottom: "Slice1056"
+  top: "InnerProduct1063"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1064"
+  type: "InnerProduct"
+  bottom: "Slice1057"
+  top: "InnerProduct1064"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1065"
+  type: "InnerProduct"
+  bottom: "Slice1058"
+  top: "InnerProduct1065"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1066"
+  type: "InnerProduct"
+  bottom: "Slice1059"
+  top: "InnerProduct1066"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1067"
+  type: "InnerProduct"
+  bottom: "Slice1060"
+  top: "InnerProduct1067"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1068"
+  type: "InnerProduct"
+  bottom: "Slice1061"
+  top: "InnerProduct1068"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1069"
+  type: "InnerProduct"
+  bottom: "Slice1062"
+  top: "InnerProduct1069"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1070"
+  type: "InnerProduct"
+  bottom: "Slice1063"
+  top: "InnerProduct1070"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1071"
+  type: "InnerProduct"
+  bottom: "Slice1064"
+  top: "InnerProduct1071"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1072"
+  type: "InnerProduct"
+  bottom: "Slice1065"
+  top: "InnerProduct1072"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1073"
+  type: "InnerProduct"
+  bottom: "Slice1066"
+  top: "InnerProduct1073"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1074"
+  type: "InnerProduct"
+  bottom: "Slice1067"
+  top: "InnerProduct1074"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1075"
+  type: "InnerProduct"
+  bottom: "Slice1068"
+  top: "InnerProduct1075"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1076"
+  type: "InnerProduct"
+  bottom: "Slice1069"
+  top: "InnerProduct1076"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1077"
+  type: "InnerProduct"
+  bottom: "Slice1070"
+  top: "InnerProduct1077"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1078"
+  type: "InnerProduct"
+  bottom: "Slice1071"
+  top: "InnerProduct1078"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1079"
+  type: "InnerProduct"
+  bottom: "Slice1072"
+  top: "InnerProduct1079"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1080"
+  type: "InnerProduct"
+  bottom: "Slice1073"
+  top: "InnerProduct1080"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1081"
+  type: "InnerProduct"
+  bottom: "Slice1074"
+  top: "InnerProduct1081"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1082"
+  type: "InnerProduct"
+  bottom: "Slice1075"
+  top: "InnerProduct1082"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1083"
+  type: "InnerProduct"
+  bottom: "Slice1076"
+  top: "InnerProduct1083"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1084"
+  type: "InnerProduct"
+  bottom: "Slice1077"
+  top: "InnerProduct1084"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1085"
+  type: "InnerProduct"
+  bottom: "Slice1078"
+  top: "InnerProduct1085"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1086"
+  type: "InnerProduct"
+  bottom: "Slice1079"
+  top: "InnerProduct1086"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1087"
+  type: "InnerProduct"
+  bottom: "Slice1080"
+  top: "InnerProduct1087"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1088"
+  type: "InnerProduct"
+  bottom: "Slice1081"
+  top: "InnerProduct1088"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1089"
+  type: "InnerProduct"
+  bottom: "Slice1082"
+  top: "InnerProduct1089"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1090"
+  type: "InnerProduct"
+  bottom: "Slice1083"
+  top: "InnerProduct1090"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1091"
+  type: "InnerProduct"
+  bottom: "Slice1084"
+  top: "InnerProduct1091"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1092"
+  type: "InnerProduct"
+  bottom: "Slice1085"
+  top: "InnerProduct1092"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1093"
+  type: "InnerProduct"
+  bottom: "Slice1086"
+  top: "InnerProduct1093"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1094"
+  type: "InnerProduct"
+  bottom: "Slice1087"
+  top: "InnerProduct1094"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1095"
+  type: "InnerProduct"
+  bottom: "Slice1088"
+  top: "InnerProduct1095"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1096"
+  type: "InnerProduct"
+  bottom: "Slice1089"
+  top: "InnerProduct1096"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1097"
+  type: "InnerProduct"
+  bottom: "Slice1090"
+  top: "InnerProduct1097"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1098"
+  type: "InnerProduct"
+  bottom: "Slice1091"
+  top: "InnerProduct1098"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1099"
+  type: "InnerProduct"
+  bottom: "Slice1092"
+  top: "InnerProduct1099"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1100"
+  type: "InnerProduct"
+  bottom: "Slice1093"
+  top: "InnerProduct1100"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1101"
+  type: "InnerProduct"
+  bottom: "Slice1094"
+  top: "InnerProduct1101"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1102"
+  type: "InnerProduct"
+  bottom: "Slice1095"
+  top: "InnerProduct1102"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1103"
+  type: "InnerProduct"
+  bottom: "Slice1096"
+  top: "InnerProduct1103"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1104"
+  type: "InnerProduct"
+  bottom: "Slice1097"
+  top: "InnerProduct1104"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1105"
+  type: "InnerProduct"
+  bottom: "Slice1098"
+  top: "InnerProduct1105"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1106"
+  type: "InnerProduct"
+  bottom: "Slice1099"
+  top: "InnerProduct1106"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1107"
+  type: "InnerProduct"
+  bottom: "Slice1100"
+  top: "InnerProduct1107"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1108"
+  type: "InnerProduct"
+  bottom: "Slice1101"
+  top: "InnerProduct1108"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1109"
+  type: "InnerProduct"
+  bottom: "Slice1102"
+  top: "InnerProduct1109"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1110"
+  type: "InnerProduct"
+  bottom: "Slice1103"
+  top: "InnerProduct1110"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1111"
+  type: "InnerProduct"
+  bottom: "Slice1104"
+  top: "InnerProduct1111"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1112"
+  type: "InnerProduct"
+  bottom: "Slice1105"
+  top: "InnerProduct1112"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1113"
+  type: "InnerProduct"
+  bottom: "Slice1106"
+  top: "InnerProduct1113"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1114"
+  type: "InnerProduct"
+  bottom: "Slice1107"
+  top: "InnerProduct1114"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1115"
+  type: "InnerProduct"
+  bottom: "Slice1108"
+  top: "InnerProduct1115"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1116"
+  type: "InnerProduct"
+  bottom: "Slice1109"
+  top: "InnerProduct1116"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1117"
+  type: "InnerProduct"
+  bottom: "Slice1110"
+  top: "InnerProduct1117"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1118"
+  type: "InnerProduct"
+  bottom: "Slice1111"
+  top: "InnerProduct1118"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "InnerProduct1119"
+  type: "InnerProduct"
+  bottom: "Slice1112"
+  top: "InnerProduct1119"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 9000
+    weight_filler {
+      type: "gaussian"
+      std: 0.0001675
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "Concat3"
+  type: "Concat"
+  bottom: "InnerProduct1020"
+  bottom: "InnerProduct1021"
+  bottom: "InnerProduct1022"
+  bottom: "InnerProduct1023"
+  bottom: "InnerProduct1024"
+  bottom: "InnerProduct1025"
+  bottom: "InnerProduct1026"
+  bottom: "InnerProduct1027"
+  bottom: "InnerProduct1028"
+  bottom: "InnerProduct1029"
+  bottom: "InnerProduct1030"
+  bottom: "InnerProduct1031"
+  bottom: "InnerProduct1032"
+  bottom: "InnerProduct1033"
+  bottom: "InnerProduct1034"
+  bottom: "InnerProduct1035"
+  bottom: "InnerProduct1036"
+  bottom: "InnerProduct1037"
+  bottom: "InnerProduct1038"
+  bottom: "InnerProduct1039"
+  bottom: "InnerProduct1040"
+  bottom: "InnerProduct1041"
+  bottom: "InnerProduct1042"
+  bottom: "InnerProduct1043"
+  bottom: "InnerProduct1044"
+  bottom: "InnerProduct1045"
+  bottom: "InnerProduct1046"
+  bottom: "InnerProduct1047"
+  bottom: "InnerProduct1048"
+  bottom: "InnerProduct1049"
+  bottom: "InnerProduct1050"
+  bottom: "InnerProduct1051"
+  bottom: "InnerProduct1052"
+  bottom: "InnerProduct1053"
+  bottom: "InnerProduct1054"
+  bottom: "InnerProduct1055"
+  bottom: "InnerProduct1056"
+  bottom: "InnerProduct1057"
+  bottom: "InnerProduct1058"
+  bottom: "InnerProduct1059"
+  bottom: "InnerProduct1060"
+  bottom: "InnerProduct1061"
+  bottom: "InnerProduct1062"
+  bottom: "InnerProduct1063"
+  bottom: "InnerProduct1064"
+  bottom: "InnerProduct1065"
+  bottom: "InnerProduct1066"
+  bottom: "InnerProduct1067"
+  bottom: "InnerProduct1068"
+  bottom: "InnerProduct1069"
+  bottom: "InnerProduct1070"
+  bottom: "InnerProduct1071"
+  bottom: "InnerProduct1072"
+  bottom: "InnerProduct1073"
+  bottom: "InnerProduct1074"
+  bottom: "InnerProduct1075"
+  bottom: "InnerProduct1076"
+  bottom: "InnerProduct1077"
+  bottom: "InnerProduct1078"
+  bottom: "InnerProduct1079"
+  bottom: "InnerProduct1080"
+  bottom: "InnerProduct1081"
+  bottom: "InnerProduct1082"
+  bottom: "InnerProduct1083"
+  bottom: "InnerProduct1084"
+  bottom: "InnerProduct1085"
+  bottom: "InnerProduct1086"
+  bottom: "InnerProduct1087"
+  bottom: "InnerProduct1088"
+  bottom: "InnerProduct1089"
+  bottom: "InnerProduct1090"
+  bottom: "InnerProduct1091"
+  bottom: "InnerProduct1092"
+  bottom: "InnerProduct1093"
+  bottom: "InnerProduct1094"
+  bottom: "InnerProduct1095"
+  bottom: "InnerProduct1096"
+  bottom: "InnerProduct1097"
+  bottom: "InnerProduct1098"
+  bottom: "InnerProduct1099"
+  bottom: "InnerProduct1100"
+  bottom: "InnerProduct1101"
+  bottom: "InnerProduct1102"
+  bottom: "InnerProduct1103"
+  bottom: "InnerProduct1104"
+  bottom: "InnerProduct1105"
+  bottom: "InnerProduct1106"
+  bottom: "InnerProduct1107"
+  bottom: "InnerProduct1108"
+  bottom: "InnerProduct1109"
+  bottom: "InnerProduct1110"
+  bottom: "InnerProduct1111"
+  bottom: "InnerProduct1112"
+  bottom: "InnerProduct1113"
+  bottom: "InnerProduct1114"
+  bottom: "InnerProduct1115"
+  bottom: "InnerProduct1116"
+  bottom: "InnerProduct1117"
+  bottom: "InnerProduct1118"
+  bottom: "InnerProduct1119"
+  top: "Concat3"
+}
+layer {
+  name: "Sigmoid1"
+  type: "Sigmoid"
+  bottom: "Concat3"
+  top: "Sigmoid1"
+}
+layer {
+  name: "EuclideanLoss1"
+  type: "EuclideanLoss"
+  bottom: "data"
+  bottom: "Sigmoid1"
+  top: "EuclideanLoss1"
+  loss_weight: 1
+}
+layer {
+  name: "EuclideanLoss2"
+  type: "EuclideanLoss"
+  bottom: "label"
+  bottom: "label"
+  top: "EuclideanLoss2"
+  loss_weight: 0
+}
+

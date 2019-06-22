@@ -1,0 +1,19 @@
+net: "train_val.prototxt"
+test_iter: 1000
+test_interval: 1000
+
+base_lr: 0.001
+weight_decay: 0.0005
+
+lr_policy: "step"
+gamma: 0.1
+stepsize: 10000
+
+display: 1000
+max_iter: 100000
+snapshot: 10000
+snapshot_prefix: "model/t_"
+
+solver_mode: GPU
+type: "RMSProp"
+rms_decay: 0.98

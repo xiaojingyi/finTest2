@@ -1,0 +1,1 @@
+set(AM_OLD_COMPILE_SETTINGS "QT_CORE_LIB;QT_NO_DEBUG ~~~ /datas/codes/sauron/cmodel/featurebr/build;/datas/codes/sauron/cmodel/featurebr;/usr/local/include/opencv;/usr/local/include;/usr/include/qt5;/usr/include/qt5/QtCore;/usr/lib64/qt5/mkspecs/linux-g++;/usr/include/qt5/QtGui ~~~  ~~~ FALSE ~~~ ")

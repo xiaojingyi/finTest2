@@ -1,0 +1,396 @@
+name: "FNet"
+input: "indata"
+input_dim: 1
+input_dim: 1024
+input_dim: 1
+input_dim: 1
+
+layer {
+  name: "data"
+  type: "Flatten"
+  bottom: "indata"
+  top: "data"
+}
+layer {
+  name: "drop2_1"
+  type: "Dropout2"
+  bottom: "data"
+  top: "drop2_1"
+  top: "drop2_2"
+  top: "drop2_3"
+  dropout_param {
+    dropout_ratio: 0.3
+    is_scale: true
+  }
+}
+layer {
+  name: "silence_1"
+  type: "Silence"
+  bottom: "drop2_2"
+}
+layer {
+  name: "fc_1"
+  type: "InnerProduct"
+  bottom: "drop2_1"
+  top: "fc_1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 2048
+    weight_filler {
+      type: "xavier"
+      std: 0.0098765
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu_1"
+  type: "ReLU"
+  bottom: "fc_1"
+  top: "fc_1"
+}
+layer {
+  name: "fc_2"
+  type: "InnerProduct"
+  bottom: "fc_1"
+  top: "fc_2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 2048
+    weight_filler {
+      type: "xavier"
+      std: 0.0098765
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu_2"
+  type: "ReLU"
+  bottom: "fc_2"
+  top: "fc_2"
+}
+layer {
+  name: "fc_3"
+  type: "InnerProduct"
+  bottom: "fc_2"
+  top: "fc_3"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 2048
+    weight_filler {
+      type: "gaussian"
+      std: 0.0098765
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "sigmoid_1"
+  type: "Sigmoid"
+  bottom: "fc_3"
+  top: "sigmoid_1"
+}
+layer {
+  name: "fc_4"
+  type: "InnerProduct"
+  bottom: "sigmoid_1"
+  top: "fc_4"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 2048
+    weight_filler {
+      type: "gaussian"
+      std: 0.0098765
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "sigmoid_2"
+  type: "Sigmoid"
+  bottom: "fc_4"
+  top: "sigmoid_2"
+}
+layer {
+  name: "fc_5"
+  type: "InnerProduct"
+  bottom: "sigmoid_2"
+  top: "fc_5"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 2048
+    weight_filler {
+      type: "gaussian"
+      std: 0.0098765
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "sigmoid_3"
+  type: "Sigmoid"
+  bottom: "fc_5"
+  top: "sigmoid_3"
+}
+layer {
+  name: "eltwise_1"
+  type: "Eltwise"
+  bottom: "fc_2"
+  bottom: "sigmoid_3"
+  top: "eltwise_1"
+  eltwise_param {
+    operation: PROD
+  }
+}
+layer {
+  name: "bn_1"
+  type: "BatchNorm"
+  bottom: "eltwise_1"
+  top: "bn_1"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "scale_1"
+  type: "Scale"
+  bottom: "bn_1"
+  top: "scale_1"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "fc_6"
+  type: "InnerProduct"
+  bottom: "scale_1"
+  top: "fc_6"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 2048
+    weight_filler {
+      type: "xavier"
+      std: 0.0098765
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu_3"
+  type: "ReLU"
+  bottom: "fc_6"
+  top: "fc_6"
+}
+layer {
+  name: "fc_7"
+  type: "InnerProduct"
+  bottom: "fc_6"
+  top: "fc_7"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 2048
+    weight_filler {
+      type: "gaussian"
+      std: 0.0098765
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "sigmoid_4"
+  type: "Sigmoid"
+  bottom: "fc_7"
+  top: "sigmoid_4"
+}
+layer {
+  name: "fc_8"
+  type: "InnerProduct"
+  bottom: "sigmoid_4"
+  top: "fc_8"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 2048
+    weight_filler {
+      type: "gaussian"
+      std: 0.0098765
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "sigmoid_5"
+  type: "Sigmoid"
+  bottom: "fc_8"
+  top: "sigmoid_5"
+}
+layer {
+  name: "fc_9"
+  type: "InnerProduct"
+  bottom: "sigmoid_5"
+  top: "fc_9"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 2048
+    weight_filler {
+      type: "gaussian"
+      std: 0.0098765
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "sigmoid_6"
+  type: "Sigmoid"
+  bottom: "fc_9"
+  top: "sigmoid_6"
+}
+layer {
+  name: "eltwise_2"
+  type: "Eltwise"
+  bottom: "fc_6"
+  bottom: "sigmoid_6"
+  top: "eltwise_2"
+  eltwise_param {
+    operation: PROD
+  }
+}
+layer {
+  name: "bn_2"
+  type: "BatchNorm"
+  bottom: "eltwise_2"
+  top: "bn_2"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "scale_2"
+  type: "Scale"
+  bottom: "bn_2"
+  top: "scale_2"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "out_1"
+  type: "InnerProduct"
+  bottom: "scale_2"
+  top: "out_1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 1024
+    weight_filler {
+      type: "xavier"
+      std: 0.0098765
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "sigmoid_7"
+  type: "Sigmoid"
+  bottom: "out_1"
+  top: "sigmoid_7"
+}

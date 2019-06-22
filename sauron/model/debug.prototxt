@@ -1,0 +1,912 @@
+name: "Sauron Tree V0.11"
+layer {
+  name: "data"
+  type: "HDF5Data"
+  top: "data"
+  top: "label"
+  include {
+    phase: TRAIN
+  }
+  hdf5_data_param {
+    source: "train.txt"
+    batch_size: 256
+  }
+}
+layer {
+  name: "data"
+  type: "HDF5Data"
+  top: "data"
+  top: "label"
+  include {
+    phase: TEST
+  }
+  hdf5_data_param {
+    source: "test.txt"
+    batch_size: 10
+  }
+}
+layer {
+  name: "slice_pair"
+  type: "Slice"
+  bottom: "data"
+    top: "data0"
+  top: "data1"
+  top: "data2"
+  top: "data3"
+  top: "data4"
+  top: "data5"
+
+  slice_param {
+    slice_dim: 1
+        slice_point: 600
+    slice_point: 1200
+    slice_point: 1800
+    slice_point: 2400
+    slice_point: 3000
+
+  }
+}
+layer {
+  name: "slice-ip_0-0"
+  type: "InnerProduct"
+  bottom: "data0"
+  top: "slice-ip_0-0"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 64
+    weight_filler {
+      type: "xavier"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu-slice-ip_0-0"
+  type: "ReLU"
+  bottom: "slice-ip_0-0"
+  top: "slice-ip_0-0"
+}
+layer {
+  name: "drop-slice-ip_0-0"
+  type: "Dropout"
+  bottom: "slice-ip_0-0"
+  top: "slice-ip_0-0"
+  dropout_param {
+    dropout_ratio: 0.3
+  }
+}
+layer {
+  name: "slice-ip_0-1"
+  type: "InnerProduct"
+  bottom: "slice-ip_0-0"
+  top: "slice-ip_0-1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 32
+    weight_filler {
+      type: "xavier"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu-slice-ip_0-1"
+  type: "ReLU"
+  bottom: "slice-ip_0-1"
+  top: "slice-ip_0-1"
+}
+layer {
+  name: "drop-slice-ip_0-1"
+  type: "Dropout"
+  bottom: "slice-ip_0-1"
+  top: "slice-ip_0-1"
+  dropout_param {
+    dropout_ratio: 0.3
+  }
+}
+layer {
+  name: "slice-ip_0-2"
+  type: "InnerProduct"
+  bottom: "slice-ip_0-1"
+  top: "slice-ip_0-2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 16
+    weight_filler {
+      type: "xavier"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu-slice-ip_0-2"
+  type: "ReLU"
+  bottom: "slice-ip_0-2"
+  top: "slice-ip_0-2"
+}
+layer {
+  name: "drop-slice-ip_0-2"
+  type: "Dropout"
+  bottom: "slice-ip_0-2"
+  top: "slice-ip_0-2"
+  dropout_param {
+    dropout_ratio: 0.3
+  }
+}
+layer {
+  name: "slice-ip_1-0"
+  type: "InnerProduct"
+  bottom: "data1"
+  top: "slice-ip_1-0"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 64
+    weight_filler {
+      type: "xavier"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu-slice-ip_1-0"
+  type: "ReLU"
+  bottom: "slice-ip_1-0"
+  top: "slice-ip_1-0"
+}
+layer {
+  name: "drop-slice-ip_1-0"
+  type: "Dropout"
+  bottom: "slice-ip_1-0"
+  top: "slice-ip_1-0"
+  dropout_param {
+    dropout_ratio: 0.3
+  }
+}
+layer {
+  name: "slice-ip_1-1"
+  type: "InnerProduct"
+  bottom: "slice-ip_1-0"
+  top: "slice-ip_1-1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 32
+    weight_filler {
+      type: "xavier"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu-slice-ip_1-1"
+  type: "ReLU"
+  bottom: "slice-ip_1-1"
+  top: "slice-ip_1-1"
+}
+layer {
+  name: "drop-slice-ip_1-1"
+  type: "Dropout"
+  bottom: "slice-ip_1-1"
+  top: "slice-ip_1-1"
+  dropout_param {
+    dropout_ratio: 0.3
+  }
+}
+layer {
+  name: "slice-ip_1-2"
+  type: "InnerProduct"
+  bottom: "slice-ip_1-1"
+  top: "slice-ip_1-2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 16
+    weight_filler {
+      type: "xavier"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu-slice-ip_1-2"
+  type: "ReLU"
+  bottom: "slice-ip_1-2"
+  top: "slice-ip_1-2"
+}
+layer {
+  name: "drop-slice-ip_1-2"
+  type: "Dropout"
+  bottom: "slice-ip_1-2"
+  top: "slice-ip_1-2"
+  dropout_param {
+    dropout_ratio: 0.3
+  }
+}
+layer {
+  name: "slice-ip_2-0"
+  type: "InnerProduct"
+  bottom: "data2"
+  top: "slice-ip_2-0"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 64
+    weight_filler {
+      type: "xavier"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu-slice-ip_2-0"
+  type: "ReLU"
+  bottom: "slice-ip_2-0"
+  top: "slice-ip_2-0"
+}
+layer {
+  name: "drop-slice-ip_2-0"
+  type: "Dropout"
+  bottom: "slice-ip_2-0"
+  top: "slice-ip_2-0"
+  dropout_param {
+    dropout_ratio: 0.3
+  }
+}
+layer {
+  name: "slice-ip_2-1"
+  type: "InnerProduct"
+  bottom: "slice-ip_2-0"
+  top: "slice-ip_2-1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 32
+    weight_filler {
+      type: "xavier"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu-slice-ip_2-1"
+  type: "ReLU"
+  bottom: "slice-ip_2-1"
+  top: "slice-ip_2-1"
+}
+layer {
+  name: "drop-slice-ip_2-1"
+  type: "Dropout"
+  bottom: "slice-ip_2-1"
+  top: "slice-ip_2-1"
+  dropout_param {
+    dropout_ratio: 0.3
+  }
+}
+layer {
+  name: "slice-ip_2-2"
+  type: "InnerProduct"
+  bottom: "slice-ip_2-1"
+  top: "slice-ip_2-2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 16
+    weight_filler {
+      type: "xavier"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu-slice-ip_2-2"
+  type: "ReLU"
+  bottom: "slice-ip_2-2"
+  top: "slice-ip_2-2"
+}
+layer {
+  name: "drop-slice-ip_2-2"
+  type: "Dropout"
+  bottom: "slice-ip_2-2"
+  top: "slice-ip_2-2"
+  dropout_param {
+    dropout_ratio: 0.3
+  }
+}
+layer {
+  name: "slice-ip_3-0"
+  type: "InnerProduct"
+  bottom: "data3"
+  top: "slice-ip_3-0"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 64
+    weight_filler {
+      type: "xavier"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu-slice-ip_3-0"
+  type: "ReLU"
+  bottom: "slice-ip_3-0"
+  top: "slice-ip_3-0"
+}
+layer {
+  name: "drop-slice-ip_3-0"
+  type: "Dropout"
+  bottom: "slice-ip_3-0"
+  top: "slice-ip_3-0"
+  dropout_param {
+    dropout_ratio: 0.3
+  }
+}
+layer {
+  name: "slice-ip_3-1"
+  type: "InnerProduct"
+  bottom: "slice-ip_3-0"
+  top: "slice-ip_3-1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 32
+    weight_filler {
+      type: "xavier"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu-slice-ip_3-1"
+  type: "ReLU"
+  bottom: "slice-ip_3-1"
+  top: "slice-ip_3-1"
+}
+layer {
+  name: "drop-slice-ip_3-1"
+  type: "Dropout"
+  bottom: "slice-ip_3-1"
+  top: "slice-ip_3-1"
+  dropout_param {
+    dropout_ratio: 0.3
+  }
+}
+layer {
+  name: "slice-ip_3-2"
+  type: "InnerProduct"
+  bottom: "slice-ip_3-1"
+  top: "slice-ip_3-2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 16
+    weight_filler {
+      type: "xavier"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu-slice-ip_3-2"
+  type: "ReLU"
+  bottom: "slice-ip_3-2"
+  top: "slice-ip_3-2"
+}
+layer {
+  name: "drop-slice-ip_3-2"
+  type: "Dropout"
+  bottom: "slice-ip_3-2"
+  top: "slice-ip_3-2"
+  dropout_param {
+    dropout_ratio: 0.3
+  }
+}
+layer {
+  name: "slice-ip_4-0"
+  type: "InnerProduct"
+  bottom: "data4"
+  top: "slice-ip_4-0"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 64
+    weight_filler {
+      type: "xavier"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu-slice-ip_4-0"
+  type: "ReLU"
+  bottom: "slice-ip_4-0"
+  top: "slice-ip_4-0"
+}
+layer {
+  name: "drop-slice-ip_4-0"
+  type: "Dropout"
+  bottom: "slice-ip_4-0"
+  top: "slice-ip_4-0"
+  dropout_param {
+    dropout_ratio: 0.3
+  }
+}
+layer {
+  name: "slice-ip_4-1"
+  type: "InnerProduct"
+  bottom: "slice-ip_4-0"
+  top: "slice-ip_4-1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 32
+    weight_filler {
+      type: "xavier"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu-slice-ip_4-1"
+  type: "ReLU"
+  bottom: "slice-ip_4-1"
+  top: "slice-ip_4-1"
+}
+layer {
+  name: "drop-slice-ip_4-1"
+  type: "Dropout"
+  bottom: "slice-ip_4-1"
+  top: "slice-ip_4-1"
+  dropout_param {
+    dropout_ratio: 0.3
+  }
+}
+layer {
+  name: "slice-ip_4-2"
+  type: "InnerProduct"
+  bottom: "slice-ip_4-1"
+  top: "slice-ip_4-2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 16
+    weight_filler {
+      type: "xavier"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu-slice-ip_4-2"
+  type: "ReLU"
+  bottom: "slice-ip_4-2"
+  top: "slice-ip_4-2"
+}
+layer {
+  name: "drop-slice-ip_4-2"
+  type: "Dropout"
+  bottom: "slice-ip_4-2"
+  top: "slice-ip_4-2"
+  dropout_param {
+    dropout_ratio: 0.3
+  }
+}
+layer {
+  name: "slice-ip_5-0"
+  type: "InnerProduct"
+  bottom: "data5"
+  top: "slice-ip_5-0"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 64
+    weight_filler {
+      type: "xavier"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu-slice-ip_5-0"
+  type: "ReLU"
+  bottom: "slice-ip_5-0"
+  top: "slice-ip_5-0"
+}
+layer {
+  name: "drop-slice-ip_5-0"
+  type: "Dropout"
+  bottom: "slice-ip_5-0"
+  top: "slice-ip_5-0"
+  dropout_param {
+    dropout_ratio: 0.3
+  }
+}
+layer {
+  name: "slice-ip_5-1"
+  type: "InnerProduct"
+  bottom: "slice-ip_5-0"
+  top: "slice-ip_5-1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 32
+    weight_filler {
+      type: "xavier"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu-slice-ip_5-1"
+  type: "ReLU"
+  bottom: "slice-ip_5-1"
+  top: "slice-ip_5-1"
+}
+layer {
+  name: "drop-slice-ip_5-1"
+  type: "Dropout"
+  bottom: "slice-ip_5-1"
+  top: "slice-ip_5-1"
+  dropout_param {
+    dropout_ratio: 0.3
+  }
+}
+layer {
+  name: "slice-ip_5-2"
+  type: "InnerProduct"
+  bottom: "slice-ip_5-1"
+  top: "slice-ip_5-2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 16
+    weight_filler {
+      type: "xavier"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu-slice-ip_5-2"
+  type: "ReLU"
+  bottom: "slice-ip_5-2"
+  top: "slice-ip_5-2"
+}
+layer {
+  name: "drop-slice-ip_5-2"
+  type: "Dropout"
+  bottom: "slice-ip_5-2"
+  top: "slice-ip_5-2"
+  dropout_param {
+    dropout_ratio: 0.3
+  }
+}
+layer {
+  name: "split-concat"
+  type: "Concat"
+    bottom: "slice-ip_0-2"
+  bottom: "slice-ip_1-2"
+  bottom: "slice-ip_2-2"
+  bottom: "slice-ip_3-2"
+  bottom: "slice-ip_4-2"
+  bottom: "slice-ip_5-2"
+
+  top: "split-concat"
+}
+layer {
+  name: "fc-0"
+  type: "InnerProduct"
+  bottom: "split-concat"
+  top: "fc-0"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 128
+    weight_filler {
+      type: "xavier"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu-fc-0"
+  type: "ReLU"
+  bottom: "fc-0"
+  top: "fc-0"
+}
+layer {
+  name: "drop-fc-0"
+  type: "Dropout"
+  bottom: "fc-0"
+  top: "fc-0"
+  dropout_param {
+    dropout_ratio: 0.3
+  }
+}
+layer {
+  name: "fc-1"
+  type: "InnerProduct"
+  bottom: "fc-0"
+  top: "fc-1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 128
+    weight_filler {
+      type: "xavier"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu-fc-1"
+  type: "ReLU"
+  bottom: "fc-1"
+  top: "fc-1"
+}
+layer {
+  name: "drop-fc-1"
+  type: "Dropout"
+  bottom: "fc-1"
+  top: "fc-1"
+  dropout_param {
+    dropout_ratio: 0.3
+  }
+}
+layer {
+  name: "out"
+  type: "InnerProduct"
+  bottom: "fc-1"
+  top: "out"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 10
+    weight_filler {
+      type: "xavier"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "loss-out"
+  type: "SoftmaxWithLoss"
+  bottom: "out"
+  bottom: "label"
+  top: "loss-out"
+}
+layer {
+  name: "accuracy-train-loss-out"
+  type: "Accuracy"
+  bottom: "out"
+  bottom: "label"
+  top: "accuracy-train-loss-out"
+  include {
+    phase: TRAIN
+  }
+}
+layer {
+  name: "accuracy-loss-out"
+  type: "Accuracy"
+  bottom: "out"
+  bottom: "label"
+  top: "accuracy-loss-out"
+  include {
+    phase: TEST
+  }
+}

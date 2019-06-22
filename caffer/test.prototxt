@@ -1,0 +1,110 @@
+name: "Sauron Net"
+# note: 
+layer {
+  name: "data"
+  type: "Data"
+  top: "data"
+  top: "label"
+  data_param {
+    source: "./abs"
+    batch_size: 128
+    backend: LMDB
+  }
+}
+layer {
+  name: "Slice1"
+  type: "Slice"
+  bottom: "data"
+  top: "Slice1"
+  top: "Slice2"
+  top: "Slice3"
+  slice_param {
+    slice_point: 34
+    slice_point: 68
+  }
+}
+layer {
+  name: "Concat1"
+  type: "Concat"
+  bottom: "Slice1"
+  bottom: "Slice2"
+  bottom: "Slice3"
+  top: "Concat1"
+}
+layer {
+  name: "InnerProduct1"
+  type: "InnerProduct"
+  bottom: "Concat1"
+  top: "InnerProduct1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 10
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "ReLU1"
+  type: "ReLU"
+  bottom: "InnerProduct1"
+  top: "InnerProduct1"
+}
+layer {
+  name: "Dropout1"
+  type: "Dropout"
+  bottom: "InnerProduct1"
+  top: "InnerProduct1"
+  dropout_param {
+    dropout_ratio: 0.3
+  }
+}
+layer {
+  name: "InnerProduct2"
+  type: "InnerProduct"
+  bottom: "InnerProduct1"
+  top: "InnerProduct2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 100
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "Sigmond1"
+  type: "Sigmond"
+  bottom: "InnerProduct2"
+  top: "Sigmond1"
+}
+layer {
+  name: "EuclideanLoss1"
+  type: "EuclideanLoss"
+  bottom: "Sigmond1"
+  bottom: "data"
+  top: "EuclideanLoss1"
+  loss_weight: 0.4
+}

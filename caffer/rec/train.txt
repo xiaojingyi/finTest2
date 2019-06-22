@@ -1,0 +1,1 @@
+/tmp/caffe_train//trainer_cmd

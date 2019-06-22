@@ -1,0 +1,78 @@
+layer {
+  name: "Data1"
+  type: "Data"
+  top: "Data1"
+  top: "Data2"
+  data_param {
+    source: "./abs"
+    batch_size: 128
+    backend: LMDB
+  }
+}
+layer {
+  name: "Slice1"
+  type: "Slice"
+  bottom: "Data1"
+  top: "Slice1"
+  top: "Slice2"
+  top: "Slice3"
+  slice_param {
+    slice_point: 34
+    slice_point: 68
+  }
+}
+layer {
+  name: "Concat1"
+  type: "Concat"
+  bottom: "Slice1"
+  bottom: "Slice2"
+  bottom: "Slice3"
+  top: "Concat1"
+}
+layer {
+  name: "InnerProduct1"
+  type: "InnerProduct"
+  bottom: "Concat1"
+  top: "InnerProduct1"
+  inner_product_param {
+    num_output: 10
+  }
+}
+layer {
+  name: "ReLU1"
+  type: "ReLU"
+  bottom: "InnerProduct1"
+  top: "InnerProduct1"
+}
+layer {
+  name: "Dropout1"
+  type: "Dropout"
+  bottom: "InnerProduct1"
+  top: "InnerProduct1"
+  dropout_param {
+    dropout_ratio: 0.3
+  }
+}
+layer {
+  name: "InnerProduct2"
+  type: "InnerProduct"
+  bottom: "InnerProduct1"
+  top: "InnerProduct2"
+  inner_product_param {
+    num_output: 100
+  }
+}
+layer {
+  name: "Sigmond1"
+  type: "Sigmond"
+  bottom: "InnerProduct2"
+  top: "Sigmond1"
+}
+layer {
+  name: "EuclideanLoss1"
+  type: "EuclideanLoss"
+  bottom: "Sigmond1"
+  bottom: "Data1"
+  top: "EuclideanLoss1"
+  loss_weight: 0.4
+}

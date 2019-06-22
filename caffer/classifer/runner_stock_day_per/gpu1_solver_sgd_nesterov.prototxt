@@ -1,0 +1,15 @@
+type: "Nesterov"
+momentum: 0.95
+gamma: 0.1
+
+lr_policy: "fixed"
+
+net: "gpu1_alex.prototxt"
+test_initialization: false
+base_lr: 0.000558266138548
+display: 1000
+max_iter: 2200000
+weight_decay: 0.00005
+snapshot: 10000
+snapshot_prefix: "model/m_1"
+solver_mode: GPU

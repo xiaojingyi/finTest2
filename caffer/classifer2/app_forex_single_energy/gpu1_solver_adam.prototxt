@@ -1,0 +1,14 @@
+net: "gpu1_stock.train.prototxt"
+test_initialization: false
+
+base_lr: 1e-05
+momentum: 0.9
+momentum2: 0.999
+lr_policy: "fixed"
+display: 1000
+max_iter: 10000000
+snapshot: 10000
+snapshot_prefix: "model/m_1"
+
+type: "Adam"
+solver_mode: GPU

@@ -1,0 +1,16 @@
+type: "AdaGrad"
+net: "train_val.prototxt"
+#test_iter: 100
+#test_interval: 20000
+base_lr: 0.05
+lr_policy: "step"
+gamma: 0.9
+stepsize: 50000
+display: 10
+max_iter: 2500000
+#momentum: 0.9
+weight_decay: 0
+#weight_decay: 0.000005
+snapshot: 10000
+snapshot_prefix: "train_test_cache/train"
+solver_mode: GPU

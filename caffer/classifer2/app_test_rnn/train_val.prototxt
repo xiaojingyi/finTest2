@@ -1,0 +1,119 @@
+name: "Rnn test"
+layer {
+  name: "data"
+  type: "HDF5Data"
+  top: "data"
+  top: "label"
+  top: "clips"
+  include {
+    phase: TRAIN
+  }
+  hdf5_data_param {
+    source: "train.txt"
+    batch_size: 32
+  }
+}
+layer {
+  name: "data"
+  type: "HDF5Data"
+  top: "data"
+  top: "label"
+  top: "clips"
+  include {
+    phase: TEST
+  }
+  hdf5_data_param {
+    source: "test.txt"
+    batch_size: 32
+  }
+}
+layer {
+  name: "lstm2"
+  type: "LSTM"
+  bottom: "data"
+  bottom: "clips"
+  top: "lstm2"
+  recurrent_param {
+    num_output: 256
+    weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "lstm2-drop"
+  type: "Dropout"
+  bottom: "lstm2"
+  top: "lstm2-drop"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "lstm1"
+  type: "LSTM"
+  bottom: "lstm2-drop"
+  bottom: "clips"
+  top: "lstm1"
+  recurrent_param {
+    num_output: 256
+    weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "lstm1-drop"
+  type: "Dropout"
+  bottom: "lstm1"
+  top: "lstm1-drop"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "fc1"
+  type: "InnerProduct"
+  bottom: "lstm1-drop"
+  top: "fc1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 200
+    weight_filler {
+      type: "xavier"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "loss"
+  type: "EuclideanLoss"
+  bottom: "fc1"
+  bottom: "label"
+  top: "l2_error"
+  #include: { phase: TRAIN }
+  loss_weight:10
+}

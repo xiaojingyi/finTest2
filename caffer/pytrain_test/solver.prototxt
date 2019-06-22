@@ -1,0 +1,28 @@
+#solver_type: ADAGRAD
+
+#type: "AdaDelta"
+#delta: 1e-10
+#momentum: 0.95
+
+lr_policy: "fixed"
+
+solver_type: SGD
+momentum: 0.9
+gamma: 0.1
+
+#lr_policy: "step"
+#stepsize: 20000
+
+
+#test_iter: 1000
+#test_interval: 1000
+test_initialization: false
+
+net: "nn_sauron_train.prototxt"
+base_lr: 0.001
+display: 1000
+max_iter: 5000000
+weight_decay: 0.00005
+snapshot: 5000
+snapshot_prefix: "model/nn_sauron"
+solver_mode: GPU 

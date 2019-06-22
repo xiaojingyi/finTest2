@@ -1,0 +1,15 @@
+net: "gpu1_alex.prototxt"
+test_initialization: false
+
+base_lr: 1.02138428999e-05
+momentum: 0.9
+weight_decay: 0.0005
+
+lr_policy: "fixed"
+display: 1000
+max_iter: 5900000
+snapshot: 10000
+snapshot_prefix: "model/m_1"
+solver_mode: GPU
+type: "RMSProp"
+rms_decay: 0.98

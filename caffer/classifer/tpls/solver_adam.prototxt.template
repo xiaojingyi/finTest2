@@ -1,0 +1,14 @@
+net: "<net>"
+test_initialization: false
+
+base_lr: <lr>
+momentum: 0.9
+momentum2: 0.999
+lr_policy: "fixed"
+display: 1000
+max_iter: <max_iter>
+snapshot: 10000
+snapshot_prefix: "model/m_<gpu>"
+
+type: "Adam"
+solver_mode: GPU

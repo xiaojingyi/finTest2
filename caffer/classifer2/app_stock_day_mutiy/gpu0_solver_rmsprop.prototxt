@@ -1,0 +1,15 @@
+net: "gpu0_stock.train.prototxt"
+test_initialization: false
+
+base_lr: 9.13517247484e-05
+momentum: 0.9
+weight_decay: 0.0005
+
+lr_policy: "fixed"
+display: 1000
+max_iter: 10000000
+snapshot: 10000
+snapshot_prefix: "model/m_0"
+solver_mode: GPU
+type: "RMSProp"
+rms_decay: 0.98

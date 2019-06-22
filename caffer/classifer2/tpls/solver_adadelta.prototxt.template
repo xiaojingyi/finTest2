@@ -1,0 +1,18 @@
+type: "AdaDelta"
+delta: 1e-8
+momentum: 0.95
+
+#momentum: 0.95
+#gamma: 0.1
+
+lr_policy: "fixed"
+
+net: "<net>"
+test_initialization: false
+base_lr: <lr>
+display: 1000
+max_iter: <max_iter>
+weight_decay: 0.0005
+snapshot: 10000
+snapshot_prefix: "model/m_<gpu>"
+solver_mode: GPU
